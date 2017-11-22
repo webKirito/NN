@@ -1,33 +1,46 @@
+
+
+let c = [[1,1],[2,2]];
+console.log(math.det(c));
+
 class Neuron {
 
-  constructor(input, weights) {
+  constructor(input, weights , bias) {
     this.input = input;
-    this.output;
-    for (let i = 0; i < weights.length; i++) {
-      this.weights[i] = weights[i];
+    if (this.bias == undefined) {
+      this.bias = Math.random();
+    } else {
+      for (let i = 0; i < weights.length; i++) {
+        this.bias = bias;
+      }
     }
-  }
-
-  execution(){
-    let tmp;
-    for (let i = 0; i < this.input.length; i++) {
-      tmp += this.input[i];
+    if (this.weights == undefined) {
+      this.weights = Math.random();
+    } else {
+      for (let i = 0; i < weights.length; i++) {
+        this.weights[i] = weights[i];
+      }
     }
-    this.output = tmp;
-    let outArr = this.weights.forEach((item) => item * this.output);
-    return outArr;
   }
 
   getInput(){
-    return input;
+    return this.input;
+  }
+
+  setBias(bias) {
+    this.bias = bias;
   }
 
   getOutput() {
-    return this.output;
+    let sum = this.bias;
+    for (let i = 0; i < this.weights.length ; i++) {
+      sum += this.weights[i] * this.input[i];
+    } 
+    return this.sigmoid(sum);
   }
 
   getWeight(){
-    return weight;
+    return this.weights;
   }
 
   setInput(input) {
@@ -39,53 +52,31 @@ class Neuron {
       this.weight[i] = weight[i];
     }
   }
-}
-
-class NeuralWeb {
-
-  constructor(enterLayer , hiddenLayers, outerLayer, activation = "sigmoid" ) {
-    if activation == 'sigmoid'{
-      this.activation = this.sigmoid();
-      this.activationPrime = this.sigmoidPrime();
-    } else
-        if (activation == 'tanh') {
-            this.activation = this.tanh();
-            this.activationPrime = this.tanhPime();
-        }
-     this.enterLayer = enterLayer;
-     this.hiddenLayers = hiddenLayers;
-     this.outerLayer = outerLayer;
-  }
-
-  identification(dataArr){
-    for (let i = 0; i < dataArr.length; i++) {
-      this.enterLayer[i].setInput(dataArr[i]);
-      let tmpArr = this.enterLayer[i].execution();
-    }
-  }
-
-  processes(arr,nextLayer){
-    for (let i = 0; i < arr.length; i++) {
-      array[i]
-    }
-  }
 
   sigmoid(x) {
     return 1.0 / (1.0 + Math.exp(-x));
   }
 
-  sigmoidPrime(x){
-    return sigmoid(x) * (1.0 - sigmoid(x));
-  }
+  
 
-  tanh(x) {
-    return Math.tanh(x);
-  }
+}
 
-   tanhPrime(x){
-    return 1.0 - Math.pow(x, 2);
-  }
+class NeuralWeb {
+    constructor(firstLayer , hiddenLayerCount ) {
+      // this.layer = [layerCount];
+      this.firstLayer = firstLayer;
+      this.output;
+      this.hiddenNeuronMatrix = [hiddenLayerCount];
+    }
+
+    setup() {
+
+    }
+
+
+
+  
 }
 
 
-var web = new NeuralWeb([new Neuron(), new Neuron()], [new Neuron(), new Neuron()] );
+
